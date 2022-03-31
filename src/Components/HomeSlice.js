@@ -24,7 +24,6 @@ export const getAllProducts = () => async (dispatch, getState) => {
   const res = await axios.get(
     `http://interviewapi.ngminds.com/api/getAllProducts`
   );
-  console.log(res.data.products)
   dispatch(setDataFromApi(res.data.products));
 };
 

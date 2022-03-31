@@ -9,20 +9,13 @@ const PaginationSlice = createSlice({
     displayPages: 3,
   },
   reducers: {
-          setPage: (state, { payload }) => {
-            state.page = payload;
-          },
-          setCurrentPage: (state, { payload }) => {
-            state.currentPage = payload;
-          },
-          setItemsPerPage: (state, { payload }) => {
-            state.itemsPerPage = payload;
-          },
+          setPage: (state, { payload }) => {state.page = payload;},
+          setCurrentPage: (state, { payload }) => {state.currentPage = payload;},
+          setItemsPerPage: (state, { payload }) => {state.itemsPerPage = payload;},
   },
 });
 
-export const { setPage, setCurrentPage, setItemsPerPage } =
-  PaginationSlice.actions;
+export const { setPage, setCurrentPage, setItemsPerPage } = PaginationSlice.actions;
 
 export default PaginationSlice.reducer;
 

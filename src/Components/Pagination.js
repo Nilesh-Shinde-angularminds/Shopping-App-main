@@ -35,7 +35,7 @@
                 dispatch(setPage(page - 1));
                 dispatch(setCurrentPage(currentPage - 1));
                 } else {
-                dispatch(setCurrentPage(currentPage - 1));
+                    dispatch(setCurrentPage(currentPage - 1));
                 }
             };
 
