@@ -49,7 +49,7 @@ export default function Home() {
 
   // ****add to cart
   function AddTOCart(id, name, image, price) {
-    let count = localData.filter((itm) => itm.id == id);
+    let count = localData.filter((itm) => itm.id ===id);
     let data = JSON.parse(localStorage.getItem("mainObj"));
 
     if (data) {
@@ -59,12 +59,12 @@ export default function Home() {
       if (count.length > 0) {
         let myData = JSON.parse(localStorage.getItem("mainObj"));
         const data = myData.map((itms) =>
-          itms.id == id ? { ...itms, quntity: itms.quntity + 1 } : itms
+          itms.id === id ? { ...itms, quntity: itms.quntity + 1 } : itms
         );
         localStorage.setItem("mainObj", JSON.stringify(data));
         setLocalData(data);
       }
-      if (count.length == 0) {
+      if (count.length === 0) {
         setSelectedData({
           id: id,
           name: name,
@@ -92,7 +92,7 @@ export default function Home() {
     const sort = e.target.value;
     let data = [...dataFromApi];
 
-    if (sort == "H") {
+    if (sort === "H") {
       dispatch(
         setDataFromApi(
           data.sort((a, b) => {
@@ -103,7 +103,7 @@ export default function Home() {
 
       setSort("h");
     }
-    if (sort == "L") {
+    if (sort === "L") {
       dispatch(
         setDataFromApi(
           data.sort((a, b) => {
@@ -113,7 +113,7 @@ export default function Home() {
       );
       setSort("l");
     }
-    if (sort == "D") {
+    if (sort === "D") {
       dispatch(getAllProducts());
     }
   }
@@ -183,7 +183,7 @@ export default function Home() {
                               height="200"
                             />
                             <br />
-                            <p>{itms.name}</p>
+                            <p style={{height:'5rem'}}>{itms.name}</p>
                             <p>
                               <i className="fa fa-inr"></i>
                               {itms.price}

@@ -1,14 +1,16 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import NaveBar from './NaveBar'
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import { useDispatch, useSelector } from 'react-redux';
 import { setlocalStorageData } from './CartSlice';
 import { setCount } from './HomeSlice';
+import { useHistory } from 'react-router-dom';
 
 
 export default function PlaceOrder() {
 
+    const history =useHistory()
     const localStorageData = useSelector((state) => state.CartData.localStorageData);
     const dispatch =useDispatch()
 
@@ -54,18 +56,24 @@ export default function PlaceOrder() {
   function postData()
   {
       if (toPostData.personName && toPostData.deliveryAddress) {
-        axios
-          .post(" http://interviewapi.ngminds.com/api/placeOrder", toPostData)
-          .then((response) =>
-            toast("Placed Succesfuly", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            })
+          axios
+              .post(" http://interviewapi.ngminds.com/api/placeOrder", toPostData)
+              .then((response) => {
+                  toast("Placed Succesfuly", {
+                      position: "top-right",
+                      autoClose: 2000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+              
+                  })
+                  localStorage.clear()
+                  dispatch(setCount(0));
+                  return (history.push('/'))
+              }
+            
           )
           .catch((error) => {
             console.error("There was an error!", error);
