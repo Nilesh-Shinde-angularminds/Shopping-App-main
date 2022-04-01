@@ -8,8 +8,11 @@ import NaveBar from "./NaveBar";
 export default function Cart() {
   const dispatch = useDispatch();
   const { localStorageData } = useSelector((state) => state.CartData);
+
   const [data, setData] = useState(); //for state Updata
-  const [totalAmount, setTotalAmount] = useState(localStorageData.map((itms) => itms.quntity * itms.price));
+  const [totalAmount, setTotalAmount] = useState(
+    localStorageData.map((itms) => itms.quntity * itms.price)
+  );
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("mainObj"))) {
@@ -17,7 +20,8 @@ export default function Cart() {
         setlocalStorageData(JSON.parse(localStorage.getItem("mainObj")))
       );
     }
-    dispatch(setCount(JSON.parse(localStorage.getItem("mainObj")).length));
+    // localStorage.getItem("mainObj").length  &&
+
     amountCalculation();
   }, [data]);
 
@@ -34,8 +38,9 @@ export default function Cart() {
   }
 
   function counterDecrement(count) {
-    let data = localStorageData.map((itms, cnt) => {
-      if (count == cnt) {
+    let data = localStorageData.map((itms, cnt) => {  
+      if (count == cnt) { 
+        
         if (itms.quntity > 1) return { ...itms, quntity: itms.quntity - 1 };
         else {
           return itms;
@@ -47,6 +52,7 @@ export default function Cart() {
     localStorage.setItem("mainObj", JSON.stringify(data));
     setData(data);
   }
+  
 
   function RemoveFunction(id) {
     let data = localStorageData.filter((itms, count) => {
@@ -57,15 +63,13 @@ export default function Cart() {
     });
     setData(data);
     localStorage.setItem("mainObj", JSON.stringify(data));
+    dispatch(setCount(data.length));
   }
   function amountCalculation() {
-    console.log(localStorageData)
     let data = localStorageData.map((itms) => itms.quntity * itms.price);
     let data2 = data.reduce((pv, cv) => pv + cv, 0);
     localStorage.setItem("TotalAmount", JSON.stringify(data2));
     setTotalAmount(data2);
-    console.log(data2)
-
 
     let quantitydata = localStorageData.map((itms) => itms.quntity);
     let totalQauntity = quantitydata.reduce((pv, cv) => pv + cv, 0);
@@ -80,8 +84,10 @@ export default function Cart() {
           <hr />
           <div className="col-md-12">
             <div className="panel panel-default">
-              <div className="panel-heading">MY CART (1)</div>
-              {localStorageData.length > 0 ? (
+              <div className="panel-heading">
+                MY CART ({localStorageData.length})
+              </div>
+              {JSON.parse(localStorage.getItem("mainObj")) ? (
                 localStorageData.map((itms, count) => {
                   return (
                     <div key={count} className="panel-body">
@@ -161,9 +167,9 @@ export default function Cart() {
                 })
               ) : (
                 <div style={{ textAlign: "center", color: "purple" }}>
+                  <h3>&#128532;</h3>
                   <h1>
                     {" "}
-                    <h3 >&#128532;</h3>
                     Your Cart Has Empty!
                     <br /> Go to Home Page And Add Some Products.
                   </h1>
@@ -191,9 +197,12 @@ export default function Cart() {
                 </Link>
                 <Link
                   to={
+                    JSON.parse(localStorage.getItem("mainObj")) &&
                     localStorageData
                       .map((itms) => itms.quntity * itms.price)
-                      .reduce((pv, cv) => pv + cv, 0) > 500 ? "placeorder" :"cart"
+                      .reduce((pv, cv) => pv + cv, 0) >= 500
+                      ? "placeorder"
+                      : "cart"
                   }
                   className="pull-right btn btn-danger"
                 >
@@ -201,7 +210,7 @@ export default function Cart() {
                 </Link>
                 <br />
                 <h6 style={{ float: "right", color: "red", fontSize: "10px" }}>
-                  *Order must be grater than 500
+                  *Order must be greater than 499
                 </h6>
               </div>
             </div>

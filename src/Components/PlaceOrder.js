@@ -51,7 +51,7 @@ export default function PlaceOrder() {
 
       const {name , value}=e.target
       setToPostData((prv)=>({...prv, [name]:value}))
-
+    
   }
   function postData()
   {
@@ -69,8 +69,8 @@ export default function PlaceOrder() {
                       progress: undefined,
               
                   })
-                  localStorage.clear()
-                  dispatch(setCount(0));
+                //   localStorage.clear()
+                //   dispatch(setCount(0));
                   return (history.push('/'))
               }
             

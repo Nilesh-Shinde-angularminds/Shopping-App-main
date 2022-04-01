@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function NaveBar() {
   const count = useSelector((state) => state.HomeData.count);
+  // const { localStorageData } = useSelector((state) => state.CartData);
 
   return (
     <>
